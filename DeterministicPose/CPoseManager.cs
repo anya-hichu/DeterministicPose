@@ -1,7 +1,5 @@
-using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
-using System;
 
 namespace DeterministicPose;
 
@@ -28,7 +26,7 @@ public unsafe class CPoseManager(IClientState clientState, Chat chat, IPluginLog
 
     public void Change(byte target)
     {
-        for(var i = 0;GetCurrentPoseIndex() != target; i++)
+        for(var i = 0; GetCurrentPoseIndex() != target; i++)
         {
             if (i > 8)
             {
