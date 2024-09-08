@@ -1,6 +1,6 @@
 # DeterministicPose
 
-Dalamud plugin that extends the cpose command to be deterministic by passing an index.
+Dalamud plugin that provides a deterministic cpose command.
 
 ## Installation
 
