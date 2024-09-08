@@ -1,0 +1,12 @@
+{
+  "Author": "Anya Hichu",
+  "Name": "DeterministicPose",
+  "Punchline": "/dpose <index>",
+  "Description": "Dalamud plugin that provides a deterministic cpose command",
+  "ApplicableVersion": "any",
+  "Tags": [
+    "cpose",
+    "deterministic",
+    "index"
+  ]
+}
