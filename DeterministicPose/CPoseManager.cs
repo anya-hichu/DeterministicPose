@@ -1,27 +1,29 @@
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using System;
 
 namespace DeterministicPose;
 
-public unsafe class CPoseManager
+public unsafe class CPoseManager(IClientState clientState, Chat chat, IPluginLog pluginLog)
 {
-    private Character* PlayerCharacter { get; init; }
-    private Chat Chat { get; init; }
-    private IPluginLog PluginLog { get; init; }
-
-    public CPoseManager(IClientState clientState, Chat chat, IPluginLog pluginLog)
-    {
-        var player = clientState.LocalPlayer;
-        PlayerCharacter = (Character*)(player?.Address ?? IntPtr.Zero);
-
-        Chat = chat;
-        PluginLog = pluginLog;
-    }
+    private IClientState ClientState { get; init; } = clientState;
+    private Chat Chat { get; init; } = chat;
+    private IPluginLog PluginLog { get; init; } = pluginLog;
 
     private byte GetCurrentPoseIndex()
     {
-        return PlayerCharacter->EmoteController.CPoseState;
+        var player = ClientState.LocalPlayer;
+
+        if (player != null)
+        {
+            var character = (Character*)player.Address;
+            return character->EmoteController.CPoseState;
+        } 
+        else
+        {
+            return 0;
+        }
     }
 
     public void Change(byte target)
