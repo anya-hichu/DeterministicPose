@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DeterministicPose.Commands;
 
-public class IfInThatPositionCommand(IChatGui chatGui, ChatServer chatServer, ICondition condition, ICommandManager commandManager) : BaseCommand(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
+public class IfInThatPositionCommand(IChatGui chatGui, ChatSender chatSender, ICondition condition, ICommandManager commandManager) : BaseCommand(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
 {
     private static readonly string COMMAND_NAME = "/ifinthatposition";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} -(?|!|$|v)( [command])?";
@@ -22,7 +22,7 @@ public class IfInThatPositionCommand(IChatGui chatGui, ChatServer chatServer, IC
     private static readonly string ABORT_COMMAND = "/macrocancel";
 
     private IChatGui ChatGui { get; init; } = chatGui;
-    private ChatServer ChatServer { get; init; } = chatServer;
+    private ChatSender ChatSender { get; init; } = chatSender;
     private ICondition Condition { get; init; } = condition;
 
     protected override void Handler(string command, string args)
@@ -51,7 +51,7 @@ public class IfInThatPositionCommand(IChatGui chatGui, ChatServer chatServer, IC
 
                 if (!isDryRun)
                 {
-                    ChatServer.SendMessage(commandArg);
+                    ChatSender.SendMessage(commandArg);
                 }
             }
 
@@ -76,7 +76,7 @@ public class IfInThatPositionCommand(IChatGui chatGui, ChatServer chatServer, IC
 
         if (!isDryRun)
         {
-            ChatServer.SendMessage(ABORT_COMMAND);
+            ChatSender.SendMessage(ABORT_COMMAND);
         }
     }
 }

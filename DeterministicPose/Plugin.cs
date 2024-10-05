@@ -23,10 +23,10 @@ public sealed class Plugin : IDalamudPlugin
 
     public Plugin()
     {
-        var chatServer = new ChatServer(SigScanner);
-        DPoseCommand = new(ChatGui, CommandManager, new(ClientState, chatServer, PluginLog));
-        StandupCommand = new(chatServer, CommandManager);
-        IfInThatPositionCommand = new(ChatGui, chatServer, Condition, CommandManager);
+        var chatSender = new ChatSender(new(SigScanner), PluginLog);
+        DPoseCommand = new(ChatGui, CommandManager, new(ClientState, chatSender, PluginLog));
+        StandupCommand = new(chatSender, CommandManager);
+        IfInThatPositionCommand = new(ChatGui, chatSender, Condition, CommandManager);
 
         PluginInterface.UiBuilder.OpenConfigUi += Noop;
         PluginInterface.UiBuilder.OpenMainUi += Noop;
