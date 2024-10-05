@@ -4,7 +4,7 @@ Dalamud plugin that provides a deterministic pose commands.
 
 ## Installation
 
-Installable using my custom repository (https://github.com/anya-hichu/DalamudPluginRepo) or from compiled archives.
+Installable using my custom repository (instructions here: https://github.com/anya-hichu/DalamudPluginRepo) or from compiled archives.
 
 ## Commands
 
