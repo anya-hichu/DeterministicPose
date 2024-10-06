@@ -18,7 +18,7 @@ Installable using my custom repository (instructions here: https://github.com/an
 
 ### If in that position (taken from game naming)
 
-`/ifinthatposition -(?|!|$|v)( [Command])*` (quoting support)
+`/ifinthatposition -(v|?|!|$)( [Command])*` (quoting support)
 
 Flags:
  - `-v`: Invert condition
