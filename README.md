@@ -16,7 +16,7 @@ Installable using my custom repository (instructions here: https://github.com/an
 
 `/standup`: assume standup position
 
-### If in that position (taken from game naming)
+### If in that position (taken from enum name)
 
 `/ifinthatposition -(v|?|!|$)( [Command])*` (quoting support)
 
