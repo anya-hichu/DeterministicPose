@@ -24,6 +24,6 @@ Flags:
  - `-v`: Invert condition
  - `-?`: verbose mode - display in your local chatlog any text (including commands) that are sent to the server
  - `-!`: dry run - the same as verbose mode, except nothing is actually sent to the server
- - `-$`: abort the currently running macro when true (by using the /macrocancel command)
+ - `-$`: abort using /macrocancel command
 
 (inspired by https://github.com/PrincessRTFM/TinyCommands)
