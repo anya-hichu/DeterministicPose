@@ -14,7 +14,7 @@ Installable using my custom repository (instructions here: https://github.com/an
 
 ### Standup
 
-- `/standup`: assume standup position
+`/standup`: assume standup position
 
 ### If in that position (taken from game naming)
 
