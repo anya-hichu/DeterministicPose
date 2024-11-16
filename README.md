@@ -12,19 +12,18 @@ Installable using my custom repository (instructions here: https://github.com/an
 
 `/dpose [Index]`: cpose with index
 
-### Idle
+### Standup
 
-- `/idle`: assume idle pose (standing up)
+`/standup`: assume standup position
 
-### If in that position (taken from game naming)
+### If in that position (taken from enum name)
 
-`/ifinthatposition -(?|!|$|v)( [Command])*` (quoting support)
+`/ifinthatposition -(v|?|!|$)( [Command])*` (quoting support)
 
 Flags:
  - `-v`: Invert condition
  - `-?`: verbose mode - display in your local chatlog any text (including commands) that are sent to the server
  - `-!`: dry run - the same as verbose mode, except nothing is actually sent to the server
- - `-$`: abort the currently running macro when true (by using the /macrocancel command)
- - `-@`: abort when false
+ - `-$`: abort using /macrocancel command
 
 (inspired by https://github.com/PrincessRTFM/TinyCommands)
