@@ -6,7 +6,7 @@ namespace DeterministicPose.Commands;
 public class DPoseCommand(IChatGui chatGui, ICommandManager commandManager, CPoseManager cPoseManager) : BaseCommand(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
 {
     private static readonly string COMMAND_NAME = "/dpose";
-    private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} <index>";
+    private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} [Index]";
 
     private CPoseManager CPoseManager { get; init; } = cPoseManager;
     private IChatGui ChatGui { get; init; } = chatGui;
