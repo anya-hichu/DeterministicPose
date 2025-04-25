@@ -8,13 +8,9 @@ Installable using my custom repository (instructions here: https://github.com/an
 
 ## Commands
 
-### DPose
-
-`/dpose [Index]`: cpose with index
-
-### Standup
-
+`/dpose <index>`: cpose with index
 `/standup`: assume standup position
+`/untarget`: clear current target
 
 ### If in that position (taken from enum name)
 

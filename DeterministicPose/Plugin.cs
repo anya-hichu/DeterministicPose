@@ -1,4 +1,5 @@
 using Dalamud.Game;
+using Dalamud.Game.ClientState.Objects;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -16,10 +17,12 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static ISigScanner SigScanner { get; private set; } = null!;
     [PluginService] internal static IPluginLog PluginLog { get; private set; } = null!;
     [PluginService] internal static ICondition Condition { get; private set; } = null!;
+    [PluginService] internal static ITargetManager TargetManager { get; private set; } = null!;
 
     private DPoseCommand DPoseCommand { get; init; }
     private StandupCommand StandupCommand { get; init; }
     private IfInThatPositionCommand IfInThatPositionCommand { get; init; }
+    private UntargetCommand UntargetCommand { get; init; }
 
     public Plugin()
     {
@@ -27,6 +30,7 @@ public sealed class Plugin : IDalamudPlugin
         DPoseCommand = new(ChatGui, CommandManager, new(ClientState, chatSender, PluginLog));
         StandupCommand = new(chatSender, CommandManager);
         IfInThatPositionCommand = new(ChatGui, chatSender, Condition, CommandManager);
+        UntargetCommand = new(TargetManager, CommandManager);
 
         PluginInterface.UiBuilder.OpenConfigUi += Noop;
         PluginInterface.UiBuilder.OpenMainUi += Noop;
@@ -37,6 +41,7 @@ public sealed class Plugin : IDalamudPlugin
         DPoseCommand.Dispose();
         StandupCommand.Dispose();
         IfInThatPositionCommand.Dispose();
+        UntargetCommand.Dispose();
     }
 
     private void Noop() { }
