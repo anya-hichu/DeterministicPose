@@ -14,6 +14,9 @@ public class StandupCommand(ChatSender chatSender, ICommandManager commandManage
 
     protected override void Handler(string command, string args)
     {
-        ChatSender.SendMessage(TARGET_FORWARD_COMMAND);
+        if(CommandManager.ProcessCommand(UntargetCommand.COMMAND_NAME))
+        {
+            ChatSender.SendMessage(TARGET_FORWARD_COMMAND);
+        }
     }
 }

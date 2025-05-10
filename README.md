@@ -11,6 +11,7 @@ Installable using my custom repository (instructions here: https://github.com/an
 `/dpose <index>`: cpose with index
 `/standup`: assume standup position
 `/untarget`: clear current target
+`/ifproximity <player name>`: sends /macrocancel if not in proximity 
 
 ### If in that position (taken from enum name)
 
