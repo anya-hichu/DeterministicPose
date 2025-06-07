@@ -8,7 +8,6 @@ Installable using my custom repository (instructions here: https://github.com/an
 
 ## Commands
 
-<<<<<<< HEAD
 - `/dpose <index>`: cpose with index or display current index with no argument
 - `/standup`: assume standup position
 - `/untarget`: clear current target
