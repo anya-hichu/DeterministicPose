@@ -4,13 +4,14 @@ using FFXIVClientStructs.FFXIV.Client.Game.Character;
 
 namespace DeterministicPose.Managers;
 
-public unsafe class CPoseManager(IClientState clientState, ChatSender chatSender, IPluginLog pluginLog)
+public unsafe class CPoseManager(IChatGui chatGui, IClientState clientState, ChatSender chatSender)
 {
     private static readonly string CPOSE_COMMAND = "/cpose";
+    private static readonly int MAX_TRIES = 8;
 
+    private IChatGui ChatGui { get; init; } = chatGui;
     private IClientState ClientState { get; init; } = clientState;
     private ChatSender ChatSender { get; init; } = chatSender;
-    private IPluginLog PluginLog { get; init; } = pluginLog;
 
     public byte GetCurrentPoseIndex()
     {
@@ -31,9 +32,9 @@ public unsafe class CPoseManager(IClientState clientState, ChatSender chatSender
     {
         for (var i = 0; GetCurrentPoseIndex() != target; i++)
         {
-            if (i > 8)
+            if (i > MAX_TRIES)
             {
-                PluginLog.Error($"Could not change pose from {GetCurrentPoseIndex()} to {target}");
+                ChatGui.PrintError($"Failed to change pose index to {target}");
                 break;
             }
             ChatSender.SendMessage(CPOSE_COMMAND);

@@ -32,7 +32,7 @@ public sealed class Plugin : IDalamudPlugin
     public Plugin()
     {
         var chatSender = new ChatSender(new(SigScanner), PluginLog);
-        var cPoseManager = new CPoseManager(ClientState, chatSender, PluginLog);
+        var cPoseManager = new CPoseManager(ChatGui, ClientState, chatSender);
         DPoseCommand = new(ChatGui, CommandManager, cPoseManager);
         StandupCommand = new(chatSender, CommandManager);
         IfInThatPositionCommand = new(ChatGui, chatSender, Condition, CommandManager);
