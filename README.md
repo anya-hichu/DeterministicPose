@@ -8,7 +8,7 @@ Installable using my custom repository (instructions here: https://github.com/an
 
 ## Commands
 
-`/dpose <index>`: cpose with index
+`/dpose <index>`: cpose with index or display current index with no argument
 `/standup`: assume standup position
 `/untarget`: clear current target
 `/ifproximity <player name>`: sends /macrocancel if not in proximity 

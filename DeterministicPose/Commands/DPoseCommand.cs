@@ -1,4 +1,5 @@
 using Dalamud.Plugin.Services;
+using Dalamud.Utility;
 using DeterministicPose.Managers;
 
 namespace DeterministicPose.Commands;
@@ -13,13 +14,21 @@ public class DPoseCommand(IChatGui chatGui, ICommandManager commandManager, CPos
 
     protected override void Handler(string command, string args)
     {
-        if (byte.TryParse(args, out var index))
+        if (args.IsNullOrWhitespace())
         {
-            CPoseManager.Change(index);
+            ChatGui.Print($"Current pose index: {CPoseManager.GetCurrentPoseIndex()}");
         }
         else
         {
-            ChatGui.Print(CommandHelpMessage);
+            if (byte.TryParse(args, out var index))
+            {
+                CPoseManager.Change(index);
+            }
+            else
+            {
+                ChatGui.Print(CommandHelpMessage);
+            }
         }
+        
     }
 }

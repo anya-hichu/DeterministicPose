@@ -38,10 +38,6 @@ public sealed class Plugin : IDalamudPlugin
         IfInThatPositionCommand = new(ChatGui, chatSender, Condition, CommandManager);
         UntargetCommand = new(TargetManager, CommandManager);
         IfProximity = new(CommandManager, ClientState, ChatGui, chatSender, ObjectTable, TargetManager, PluginLog);
-
-
-        PluginInterface.UiBuilder.OpenConfigUi += Noop;
-        PluginInterface.UiBuilder.OpenMainUi += Noop;
     }
 
     public void Dispose()
@@ -52,6 +48,4 @@ public sealed class Plugin : IDalamudPlugin
         UntargetCommand.Dispose();
         IfProximity.Dispose();
     }
-
-    private void Noop() { }
 }

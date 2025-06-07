@@ -12,7 +12,7 @@ public unsafe class CPoseManager(IClientState clientState, ChatSender chatSender
     private ChatSender ChatSender { get; init; } = chatSender;
     private IPluginLog PluginLog { get; init; } = pluginLog;
 
-    private byte GetCurrentPoseIndex()
+    public byte GetCurrentPoseIndex()
     {
         var player = ClientState.LocalPlayer;
 
