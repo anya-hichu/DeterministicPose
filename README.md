@@ -1,4 +1,4 @@
-# DeterministicPose
+ # DeterministicPose
 
 Dalamud plugin that provides a deterministic pose commands.
 
@@ -8,14 +8,15 @@ Installable using my custom repository (instructions here: https://github.com/an
 
 ## Commands
 
-`/dpose <index>`: cpose with index or display current index with no argument
-`/standup`: assume standup position
-`/untarget`: clear current target
-`/ifproximity <player name>`: sends /macrocancel if not in proximity 
+<<<<<<< HEAD
+- `/dpose <index>`: cpose with index or display current index with no argument
+- `/standup`: assume standup position
+- `/untarget`: clear current target
+- `/ifproximity <player name>`: sends /macrocancel if not in proximity 
 
 ### If in that position (taken from enum name)
 
-`/ifinthatposition -(v|?|!|$)( [Command])*` (quoting support)
+- `/ifinthatposition -(v|?|!|$)( [Command])*` (quoting support)
 
 Flags:
  - `-v`: Invert condition
