@@ -52,7 +52,7 @@ public unsafe class LocalSync(IChatGui chatGui, IClientState clientState, IComma
                 {
                     if (TryGetAnimationLocalTime(player, out var localTime))
                     {
-                        if (TrySetAnimationLocalTime(localPlayer, localTime))
+                        if (TrySetAnimationLocalTime(localPlayer, localTime!.Value))
                         {
                             success = true;
                         }
@@ -62,7 +62,7 @@ public unsafe class LocalSync(IChatGui chatGui, IClientState clientState, IComma
 
                 if (!success)
                 {
-                    ChatGui.PrintError($"Failed to set sync animation local time with '{player.Name}' after {MAX_RETRIES} tries (waited {RETRY_WAIT_MS * MAX_RETRIES}ms)");
+                    ChatGui.PrintError($"Failed to sync animation local time with '{player.Name}' after {MAX_RETRIES} tries (waited {RETRY_WAIT_MS * MAX_RETRIES}ms)");
                 }
             });
         } 
@@ -73,12 +73,11 @@ public unsafe class LocalSync(IChatGui chatGui, IClientState clientState, IComma
             
     }
 
-    private bool TryGetAnimationLocalTime(IPlayerCharacter player, out float localTime) => TryGetAndSetAnimationLocalTime(player, null, out localTime);
-    private bool TrySetAnimationLocalTime(IPlayerCharacter player, float newLocalTime) => TryGetAndSetAnimationLocalTime(player, newLocalTime, out var _);
-    private bool TryGetAndSetAnimationLocalTime(IPlayerCharacter player, float? newLocalTime, out float localTime)
+    private bool TryGetAnimationLocalTime(IPlayerCharacter player, out float? localTime) => TryAccessAnimationLocalTime(player, null, out localTime);
+    private bool TrySetAnimationLocalTime(IPlayerCharacter player, float newLocalTime) => TryAccessAnimationLocalTime(player, newLocalTime, out var _);
+    private bool TryAccessAnimationLocalTime(IPlayerCharacter player, float? newLocalTime, out float? localTime)
     {
-        localTime = default;
-
+        localTime = null;
         var character = (Character*)player.Address;
         if (character->DrawObject == null) return false;
         if (character->DrawObject->GetObjectType() != ObjectType.CharacterBase) return false;
@@ -103,10 +102,9 @@ public unsafe class LocalSync(IChatGui chatGui, IClientState clientState, IComma
                 {
                     control->hkaAnimationControl.LocalTime = newLocalTime.Value;
                 }
-                return true;
             }
         }
-        return false;
+        return localTime != null;
     }
 
     private IPlayerCharacter? FindPlayerCharacter(string name)
