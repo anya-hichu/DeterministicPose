@@ -6,7 +6,6 @@ using Dalamud.Plugin.Services;
 using DeterministicPose.Chat;
 using DeterministicPose.Commands;
 using DeterministicPose.Managers;
-using Lumina.Excel.Sheets;
 
 namespace DeterministicPose;
 
@@ -22,22 +21,25 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static ITargetManager TargetManager { get; private set; } = null!;
     [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
     [PluginService] internal static IObjectTable ObjectTable { get; private set; } = null!;
+    [PluginService] internal static IFramework Framework { get; private set; } = null!;
 
     private DPoseCommand DPoseCommand { get; init; }
     private StandupCommand StandupCommand { get; init; }
     private IfInThatPositionCommand IfInThatPositionCommand { get; init; }
     private UntargetCommand UntargetCommand { get; init; }
     private IfProximity IfProximity { get; init; } 
+    private LocalSync LocalSyncCommand { get; init; }
 
     public Plugin()
     {
         var chatSender = new ChatSender(new(SigScanner), PluginLog);
         var cPoseManager = new CPoseManager(ChatGui, ClientState, chatSender);
         DPoseCommand = new(ChatGui, CommandManager, cPoseManager);
-        StandupCommand = new(chatSender, CommandManager);
+        StandupCommand = new(chatSender, CommandManager, TargetManager);
         IfInThatPositionCommand = new(ChatGui, chatSender, Condition, CommandManager);
         UntargetCommand = new(TargetManager, CommandManager);
         IfProximity = new(CommandManager, ClientState, ChatGui, chatSender, ObjectTable, TargetManager, PluginLog);
+        LocalSyncCommand = new(ChatGui, ClientState, CommandManager, Framework, ObjectTable, TargetManager);
     }
 
     public void Dispose()
@@ -47,5 +49,6 @@ public sealed class Plugin : IDalamudPlugin
         IfInThatPositionCommand.Dispose();
         UntargetCommand.Dispose();
         IfProximity.Dispose();
+        LocalSyncCommand.Dispose();
     }
 }

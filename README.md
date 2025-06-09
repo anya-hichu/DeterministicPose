@@ -11,7 +11,8 @@ Installable using my custom repository (instructions here: https://github.com/an
 - `/dpose <index>`: cpose with index or display current index with no argument
 - `/standup`: assume standup position
 - `/untarget`: clear current target
-- `/ifproximity <player name>`: sends /macrocancel if not in proximity 
+- `/ifproximity <player name>`: sends /macrocancel if not in proximity (placeholders and quote support)
+- `/localsync <player name>`: Synchronize animation local time with someone (placeholders and quote support)
 
 ### If in that position (taken from enum name)
 
