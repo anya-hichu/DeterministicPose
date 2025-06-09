@@ -21,7 +21,6 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static ITargetManager TargetManager { get; private set; } = null!;
     [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
     [PluginService] internal static IObjectTable ObjectTable { get; private set; } = null!;
-    [PluginService] internal static IFramework Framework { get; private set; } = null!;
 
     private DPoseCommand DPoseCommand { get; init; }
     private StandupCommand StandupCommand { get; init; }
@@ -39,7 +38,7 @@ public sealed class Plugin : IDalamudPlugin
         IfInThatPositionCommand = new(ChatGui, chatSender, Condition, CommandManager);
         UntargetCommand = new(TargetManager, CommandManager);
         IfProximity = new(CommandManager, ClientState, ChatGui, chatSender, ObjectTable, TargetManager, PluginLog);
-        LocalSyncCommand = new(ChatGui, ClientState, CommandManager, Framework, ObjectTable, TargetManager);
+        LocalSyncCommand = new(ChatGui, ClientState, CommandManager, ObjectTable, TargetManager);
     }
 
     public void Dispose()

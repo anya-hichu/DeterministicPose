@@ -7,12 +7,13 @@ using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using FFXIVClientStructs.FFXIV.Client.Graphics.Scene;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace DeterministicPose.Commands;
 
 // Reference: https://github.com/Caraxi/SimpleHeels/blob/0a0fe3c02a0a2c5a7c96b3304952d5078cd338aa/Plugin.cs#L638
 
-public unsafe class LocalSync(IChatGui chatGui, IClientState clientState, ICommandManager commandManager, IFramework framework, IObjectTable objectTable, ITargetManager targetManager) : BaseCommand(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
+public unsafe class LocalSync(IChatGui chatGui, IClientState clientState, ICommandManager commandManager, IObjectTable objectTable, ITargetManager targetManager) : BaseCommand(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
 {
     private static readonly string COMMAND_NAME = "/localsync";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} <player name>";
@@ -22,7 +23,6 @@ public unsafe class LocalSync(IChatGui chatGui, IClientState clientState, IComma
 
     private IChatGui ChatGui { get; init; } = chatGui;
     private IClientState ClientState { get; init; } = clientState;
-    private IFramework Framework { get; init; } = framework;
     private IObjectTable ObjectTable { get; init; } = objectTable;
     private ITargetManager TargetManager { get; init; } = targetManager;
 
@@ -45,7 +45,7 @@ public unsafe class LocalSync(IChatGui chatGui, IClientState clientState, IComma
                 return;
             }
 
-            Framework.RunOnFrameworkThread(() =>
+            Task.Run(() =>
             {
                 var success = false;
                 for (var retries = 0; !success && retries < MAX_RETRIES; retries++)
