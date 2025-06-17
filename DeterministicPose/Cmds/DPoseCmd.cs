@@ -2,9 +2,9 @@ using Dalamud.Plugin.Services;
 using Dalamud.Utility;
 using DeterministicPose.Managers;
 
-namespace DeterministicPose.Commands;
+namespace DeterministicPose.Cmds;
 
-public class DPoseCommand(IChatGui chatGui, ICommandManager commandManager, CPoseManager cPoseManager) : BaseCommand(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
+public class DPoseCmd(IChatGui chatGui, ICommandManager commandManager, CPoseManager cPoseManager) : BaseCmd(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
 {
     private static readonly string COMMAND_NAME = "/dpose";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} <index>";
@@ -26,9 +26,8 @@ public class DPoseCommand(IChatGui chatGui, ICommandManager commandManager, CPos
             }
             else
             {
-                ChatGui.Print(CommandHelpMessage);
+                ChatGui.Print(COMMAND_HELP_MESSAGE);
             }
         }
-        
     }
 }

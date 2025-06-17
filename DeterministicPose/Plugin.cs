@@ -4,8 +4,9 @@ using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using DeterministicPose.Chat;
-using DeterministicPose.Commands;
+using DeterministicPose.Cmds;
 using DeterministicPose.Managers;
+using Lumina.Excel.Sheets;
 
 namespace DeterministicPose;
 
@@ -21,34 +22,41 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static ITargetManager TargetManager { get; private set; } = null!;
     [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
     [PluginService] internal static IObjectTable ObjectTable { get; private set; } = null!;
-    [PluginService] internal static INotificationManager NotificationManager { get; private set; } = null!;
+    [PluginService] internal static IFramework Framework { get; private set; } = null!;
 
-    private DPoseCommand DPoseCommand { get; init; }
-    private StandupCommand StandupCommand { get; init; }
-    private IfInThatPositionCommand IfInThatPositionCommand { get; init; }
-    private UntargetCommand UntargetCommand { get; init; }
-    private IfProximity IfProximity { get; init; } 
-    private LocalSync LocalSyncCommand { get; init; }
+
+    private DPoseCmd DPoseCmd { get; init; }
+    private StandupCmd StandupCmd { get; init; }
+    private IfInThatPositionCmd IfInThatPositionCmd { get; init; }
+    private UntargetCmd UntargetCmd { get; init; }
+    private IfProximityCmd IfProximityCmd { get; init; } 
+    private LocalSyncCmd LocalSyncCmd { get; init; }
+    private RemoteSyncCmd RemoteSyncCmd { get; init; }
 
     public Plugin()
     {
         var chatSender = new ChatSender(new(SigScanner), PluginLog);
         var cPoseManager = new CPoseManager(ChatGui, ClientState, chatSender);
-        DPoseCommand = new(ChatGui, CommandManager, cPoseManager);
-        StandupCommand = new(chatSender, CommandManager, TargetManager);
-        IfInThatPositionCommand = new(ChatGui, chatSender, Condition, CommandManager);
-        UntargetCommand = new(TargetManager, CommandManager);
-        IfProximity = new(CommandManager, ClientState, ChatGui, chatSender, ObjectTable, TargetManager, PluginLog);
-        LocalSyncCommand = new(ChatGui, ClientState, CommandManager, NotificationManager, ObjectTable, TargetManager);
+
+        DPoseCmd = new(ChatGui, CommandManager, cPoseManager);
+        StandupCmd = new(chatSender, CommandManager, TargetManager);
+        IfInThatPositionCmd = new(ChatGui, chatSender, Condition, CommandManager);
+        UntargetCmd = new(TargetManager, CommandManager);
+        IfProximityCmd = new(CommandManager, ClientState, ChatGui, chatSender, ObjectTable, TargetManager, PluginLog);
+        LocalSyncCmd = new(ChatGui, ClientState, CommandManager, ObjectTable, PluginLog, TargetManager);
+
+        var emoteSheet = DataManager.GetExcelSheet<Emote>()!;
+        RemoteSyncCmd = new(ChatGui, chatSender, ClientState, cPoseManager, CommandManager, emoteSheet, ObjectTable, PluginLog, TargetManager);
     }
 
     public void Dispose()
     {
-        DPoseCommand.Dispose();
-        StandupCommand.Dispose();
-        IfInThatPositionCommand.Dispose();
-        UntargetCommand.Dispose();
-        IfProximity.Dispose();
-        LocalSyncCommand.Dispose();
+        DPoseCmd.Dispose();
+        StandupCmd.Dispose();
+        IfInThatPositionCmd.Dispose();
+        UntargetCmd.Dispose();
+        IfProximityCmd.Dispose();
+        LocalSyncCmd.Dispose();
+        RemoteSyncCmd.Dispose();
     }
 }

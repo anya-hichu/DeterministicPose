@@ -2,15 +2,15 @@ using Dalamud.Game.Command;
 using Dalamud.Plugin.Services;
 using System;
 
-namespace DeterministicPose.Commands;
+namespace DeterministicPose.Cmds;
 
-public abstract class BaseCommand : IDisposable
+public abstract class BaseCmd : IDisposable
 {
     protected string Command { init; get; }
     protected string CommandHelpMessage { get; init; }
     protected ICommandManager CommandManager { get; init; }
 
-    public BaseCommand(string command, string commandHelpMessage, ICommandManager commandManager)
+    public BaseCmd(string command, string commandHelpMessage, ICommandManager commandManager)
     {
         Command = command;
         CommandHelpMessage = commandHelpMessage;
@@ -22,7 +22,7 @@ public abstract class BaseCommand : IDisposable
         });
     }
 
-    public void Dispose()
+    public virtual void Dispose()
     {
         CommandManager.RemoveHandler(Command);
     }

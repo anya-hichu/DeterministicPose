@@ -5,9 +5,9 @@ using DeterministicPose.Utils;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DeterministicPose.Commands;
+namespace DeterministicPose.Cmds;
 
-public class IfInThatPositionCommand(IChatGui chatGui, ChatSender chatSender, ICondition condition, ICommandManager commandManager) : BaseCommand(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
+public class IfInThatPositionCmd(IChatGui chatGui, ChatSender chatSender, ICondition condition, ICommandManager commandManager) : BaseCmd(COMMAND_NAME, COMMAND_HELP_MESSAGE, commandManager)
 {
     private static readonly string COMMAND_NAME = "/ifinthatposition";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} -(?|!|$|v)( [command])?";

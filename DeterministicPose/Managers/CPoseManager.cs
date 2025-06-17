@@ -16,7 +16,6 @@ public unsafe class CPoseManager(IChatGui chatGui, IClientState clientState, Cha
     public byte GetCurrentPoseIndex()
     {
         var player = ClientState.LocalPlayer;
-
         if (player != null)
         {
             var character = (Character*)player.Address;
