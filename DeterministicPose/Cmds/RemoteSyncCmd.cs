@@ -17,7 +17,7 @@ namespace DeterministicPose.Cmds;
 public unsafe class RemoteSyncCmd(IChatGui chatGui, ChatSender chatSender, IClientState clientState, CPoseManager cPoseManager, ICommandManager commandManager, ExcelSheet<Emote> emoteSheet, IObjectTable objectTable, IPluginLog pluginLog, ITargetManager targetManager) : BaseAnimCmd(clientState, commandManager, COMMAND_NAME, COMMAND_HELP_MESSAGE, objectTable, targetManager)
 {
     private static readonly string COMMAND_NAME = "/remotesync";
-    private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} (<player name>( delay)?|cancel)";
+    private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} (<player name>( <delay ms>)?|cancel)";
 
     private static readonly float MIN_SYNC_DELTA = 0.1f;
     private static readonly int WAIT_INTERVAL_MS = 10;
@@ -52,13 +52,13 @@ public unsafe class RemoteSyncCmd(IChatGui chatGui, ChatSender chatSender, IClie
         if (arg == "cancel")
         {
             CancellationTokenSource?.Cancel();
-            ChatGui.Print($"Cancelled remove sync");
+            ChatGui.Print($"Cancelled remote sync task");
             return;
         }
 
         // Offset animation start
         var delay = 0;
-        var hasDelay = numParsedArgs > 1 && int.TryParse(parsedArgs[2], out delay) && delay > 0;
+        var hasDelay = numParsedArgs > 1 && int.TryParse(parsedArgs[1], out delay);
 
         var player = FindPlayerCharacter(arg);
         if (player == null)
@@ -106,13 +106,22 @@ public unsafe class RemoteSyncCmd(IChatGui chatGui, ChatSender chatSender, IClie
         {
             float? localTime = null;
             var success = false;
+            var maxLocalTime = 0f;
 
             Timer.Restart();
             while (!success && !token.IsCancellationRequested && Timer.ElapsedMilliseconds < MAX_WAIT_MS)
             {
-                if (TryGetAnimationLocalTime(player, out localTime) && localTime!.Value < MIN_SYNC_DELTA)
+                if (TryGetAnimationLocalTime(player, out localTime))
                 {
-                    success = true;
+                    if (localTime!.Value > maxLocalTime)
+                    {
+                        maxLocalTime = localTime.Value;
+                    }
+
+                    if (localTime!.Value < MIN_SYNC_DELTA)
+                    {
+                        success = true;
+                    }
                 } 
                 else
                 {
@@ -125,13 +134,23 @@ public unsafe class RemoteSyncCmd(IChatGui chatGui, ChatSender chatSender, IClie
             {
                 if (hasDelay)
                 {
-                    Thread.Sleep(delay);
+                    var maxLocalTimeMs = (int)Math.Floor(maxLocalTime * 1000);
+                    var actualDelay = delay > 0 ? delay : maxLocalTimeMs + delay;
+
+                    if (actualDelay < 0)
+                    {
+                        ChatGui.PrintError($"Delay is above max local animation time ({maxLocalTimeMs} ms)");
+                        return;
+                    }
+
+                    PluginLog.Info($"Waiting inside task #{Task.CurrentId} for {actualDelay} ms (delay: {delay}, max local time: {maxLocalTimeMs})");
+                    Thread.Sleep(actualDelay);
                 }
                 ChatSender.SendMessage($"{textCommand.Value.Command} motion");
             } 
             else
             {
-                PluginLog.Error($"Failed to sync after {Timer.ElapsedMilliseconds} ms");
+                PluginLog.Error($"Failed to sync in task #{Task.CurrentId} after {Timer.ElapsedMilliseconds} ms");
             }
         }, token);
     }
