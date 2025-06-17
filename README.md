@@ -13,6 +13,7 @@ Installable using my custom repository (instructions here: https://github.com/an
 - `/untarget`: clear current target
 - `/ifproximity <player name>`: sends /macrocancel if not in proximity (placeholders and quote support)
 - `/localsync <source player name>( <target player name>)?`: Copy animation local time from source to target (target defaults to local player if not provided, placeholders and quote support)
+- `/remotesync <player name>( <delay (ms)>)?`: Resent current emote to sync with someone when his cycle finishes with optional delay (placeholders and quote support)
 
 ### If in that position (taken from enum name)
 
