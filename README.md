@@ -14,7 +14,7 @@ Installable using my custom repository (instructions here: https://github.com/an
 - `/ifproximity <player name>`: sends /macrocancel if not in proximity (placeholders and quote support for arguments)
 - `/localsync <source player name>( <target player name>)?`: Copy animation local time from source to target. Target defaults to local player if not provided (placeholders and quote support for arguments)
 - `/remotesync (<player name>( <delay ms>)?|cancel)`: Resent current emote to sync with someone when his cycle finishes with optional positive/negative ms delay. It's possible to abort current task using cancel subcommand (placeholders and quote support for arguments)
-- `/walk (enable|disable|toggle)?`: control walking mode
+- `/walk (enable|disable|toggle)?`: control walking mode (defaults to enable without argument)
 
 ### If in that position (taken from enum name)
 

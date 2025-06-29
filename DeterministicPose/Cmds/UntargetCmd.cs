@@ -8,8 +8,10 @@ public unsafe class UntargetCmd(ITargetManager targetManager, ICommandManager co
     public static readonly string COMMAND_NAME = "/untarget";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME}";
 
+    private ITargetManager TargetManager { get; init; } = targetManager;
+
     protected override void Handler(string command, string args)
     {
-        targetManager.Target = null;
+        TargetManager.Target = null;
     }
 }
