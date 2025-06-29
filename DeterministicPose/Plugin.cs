@@ -32,6 +32,7 @@ public sealed class Plugin : IDalamudPlugin
     private IfProximityCmd IfProximityCmd { get; init; } 
     private LocalSyncCmd LocalSyncCmd { get; init; }
     private RemoteSyncCmd RemoteSyncCmd { get; init; }
+    private WalkCmd WalkCmd { get; init; }
 
     public Plugin()
     {
@@ -47,6 +48,7 @@ public sealed class Plugin : IDalamudPlugin
 
         var emoteSheet = DataManager.GetExcelSheet<Emote>()!;
         RemoteSyncCmd = new(ChatGui, chatSender, ClientState, cPoseManager, CommandManager, emoteSheet, ObjectTable, PluginLog, TargetManager);
+        WalkCmd = new(ChatGui, CommandManager);
     }
 
     public void Dispose()
@@ -58,5 +60,6 @@ public sealed class Plugin : IDalamudPlugin
         IfProximityCmd.Dispose();
         LocalSyncCmd.Dispose();
         RemoteSyncCmd.Dispose();
+        WalkCmd.Dispose();
     }
 }
