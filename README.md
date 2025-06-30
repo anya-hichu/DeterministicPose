@@ -16,7 +16,8 @@ Installable using my custom repository (instructions here: https://github.com/an
 - `/remotesync (<player name>( <delay ms>)?|cancel)`: Resent current emote to sync with someone when his cycle finishes with optional positive/negative ms delay. It's possible to abort current task using cancel subcommand (placeholders and quote support for arguments)
 - `/walk (enable|disable|toggle)?`: control walking mode (defaults to enable without argument)
 
-### If in that position (taken from enum name)
+### If in that position
+Sit, doze and groundsit are considered as "in that position"
 
 - `/ifinthatposition -(v|?|!|$)( [Command])*` (quoting support)
 
