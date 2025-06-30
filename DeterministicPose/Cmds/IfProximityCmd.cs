@@ -19,29 +19,25 @@ public class IfProximityCmd(ICommandManager commandManager, IClientState clientS
     protected override void Handler(string command, string args)
     {
         var parsedArgs = Arguments.SplitCommandLine(args);
-        if (parsedArgs.Length == 1)
-        {
-            var name = parsedArgs[0];
-            var player = FindPlayerCharacter(name);
-            if (player != null)
-            {
-                PluginLog.Debug($"Player '{player.Name}' found at distance X: {player.YalmDistanceX}, Z: {player.YalmDistanceZ} (yalms)");
-                if (player.YalmDistanceX != 0 || player.YalmDistanceZ != 0)
-                {
-                    ChatSender.SendMessage(ABORT_COMMAND);
-                } 
-            }
-            else
-            {
-                ChatGui.PrintError($"Sending {ABORT_COMMAND} since unable to locate: {name}");
-                ChatSender.SendMessage(ABORT_COMMAND);
-            }
-        } 
-        else
+        if (parsedArgs.Length != 1)
         {
             ChatGui.PrintError(COMMAND_HELP_MESSAGE);
+            return;
+        }
+
+        var name = parsedArgs[0];
+        var player = FindPlayerCharacter(name);
+        if (player == null)
+        {
+            ChatGui.PrintError($"Sending {ABORT_COMMAND} since unable to locate: {name}");
+            ChatSender.SendMessage(ABORT_COMMAND);
+            return;
+        }
+
+        PluginLog.Debug($"Player '{player.Name}' found at distance X: {player.YalmDistanceX}, Z: {player.YalmDistanceZ} (yalms)");
+        if (player.YalmDistanceX != 0 || player.YalmDistanceZ != 0)
+        {
+            ChatSender.SendMessage(ABORT_COMMAND);
         }
     }
-
-
 }

@@ -1,5 +1,4 @@
 using Dalamud.Plugin.Services;
-using System.Threading.Tasks;
 
 namespace DeterministicPose.Chat;
 
@@ -11,6 +10,6 @@ public class ChatSender(ChatServer chatServer, IPluginLog pluginLog)
     public void SendMessage(string message)
     {
         ChatServer.SendMessage(message);
-        PluginLog.Verbose($"Sent chat message: '{message}'");
+        PluginLog.Debug($"Sent chat message: '{message}'");
     }
 }

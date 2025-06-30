@@ -18,16 +18,13 @@ public class DPoseCmd(IChatGui chatGui, ICommandManager commandManager, CPoseMan
         {
             ChatGui.Print($"Current pose index: {CPoseManager.GetCurrentPoseIndex()}");
         }
+        else if (byte.TryParse(args, out var index))
+        {
+            CPoseManager.Change(index);
+        } 
         else
         {
-            if (byte.TryParse(args, out var index))
-            {
-                CPoseManager.Change(index);
-            }
-            else
-            {
-                ChatGui.Print(COMMAND_HELP_MESSAGE);
-            }
+            ChatGui.Print(COMMAND_HELP_MESSAGE);
         }
     }
 }

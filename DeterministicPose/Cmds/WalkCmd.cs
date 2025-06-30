@@ -22,26 +22,22 @@ public unsafe class WalkCmd(IChatGui chatGui, ICommandManager commandManager) : 
         }
 
         var controlInstance = Control.Instance();
-
-        // on and off for backward compatibility
+        // Support "on" and "off" for backward compatibility
         if (parsedArgs.Length == 0 || parsedArgs[0] == "enable" || parsedArgs[0] == "on")
         {
             controlInstance->IsWalking = true;
-            return;
         }
-
-        if (parsedArgs[0] == "disable" || parsedArgs[0] == "off")
+        else if (parsedArgs[0] == "disable" || parsedArgs[0] == "off")
         {
             controlInstance->IsWalking = false;
-            return;
         }
-
-        if (parsedArgs[0] == "toggle")
+        else if (parsedArgs[0] == "toggle")
         {
             controlInstance->IsWalking = !controlInstance->IsWalking;
-            return;
         }
-
-        ChatGui.PrintError(COMMAND_HELP_MESSAGE);
+        else 
+        {
+            ChatGui.PrintError(COMMAND_HELP_MESSAGE);
+        }   
     }
 }

@@ -9,7 +9,7 @@ namespace DeterministicPose.Cmds;
 public unsafe class LocalSyncCmd(IChatGui chatGui, IClientState clientState, ICommandManager commandManager, IObjectTable objectTable, IPluginLog pluginLog, ITargetManager targetManager) : BaseAnimCmd(clientState, commandManager, COMMAND_NAME, COMMAND_HELP_MESSAGE, objectTable, targetManager)
 {
     private static readonly string COMMAND_NAME = "/localsync";
-    private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} <from>( <to>)?";
+    private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} <source player>( <target player>)?";
 
     private static readonly int MAX_RETRIES = 40;
     private static readonly int RETRY_WAIT_MS = 25;

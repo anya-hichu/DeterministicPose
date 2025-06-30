@@ -9,16 +9,16 @@ public class StandupCmd(ChatSender chatSender, ICommandManager commandManager, I
     private static readonly string COMMAND_NAME = "/standup";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME}";
 
-    private static readonly string MAGIC_COMMAND = "/action \"target forward\"";
+    private static readonly string TARGET_FORWARD_COMMAND = "/action \"target forward\"";
 
     private ChatSender ChatSender { get; init; } = chatSender;
     private ITargetManager TargetManager { get; init; } = targetManager;
 
     protected override void Handler(string command, string args)
     {
-        var currentTarget = TargetManager.Target;
+        var savedTarget = TargetManager.Target;
         TargetManager.Target = null;
-        ChatSender.SendMessage(MAGIC_COMMAND);
-        TargetManager.Target = currentTarget;
+        ChatSender.SendMessage(TARGET_FORWARD_COMMAND);
+        TargetManager.Target = savedTarget;
     }
 }
