@@ -17,7 +17,7 @@ Installable using my custom repository (instructions here: https://github.com/an
 - `/walk (enable|disable|toggle)?`: control walking mode (defaults to enable without argument)
 
 ### If in that position
-Sit, doze and groundsit are considered as "in that position"
+Doze, groundsit and sit are considered as "in that position"
 
 - `/ifinthatposition -(v|?|!|$)( [Command])*` (quoting support)
 
