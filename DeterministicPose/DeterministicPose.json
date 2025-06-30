@@ -2,7 +2,7 @@
   "Author": "Anya Hichu",
   "Name": "DeterministicPose",
   "Punchline": "Deterministic is fantastic",
-  "Description": "Dalamud plugin that provides deterministic pose commands",
+  "Description": "Provide deterministic pose commands (cpose, standup, walk, etc.)",
   "ApplicableVersion": "any",
   "Tags": [
     "cpose",
