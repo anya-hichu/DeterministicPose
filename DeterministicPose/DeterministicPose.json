@@ -1,7 +1,7 @@
 {
   "Author": "Anya Hichu",
   "Name": "DeterministicPose",
-  "Punchline": "Deterministic is fantastic",
+  "Punchline": "Deterministic is fantastic!",
   "Description": "Provide deterministic pose commands (cpose, standup, walk, etc.)",
   "ApplicableVersion": "any",
   "Tags": [
