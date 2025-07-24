@@ -29,12 +29,18 @@ public unsafe class CPoseManager(IChatGui chatGui, IClientState clientState, Cha
 
     public void Change(byte target)
     {
-        for (var i = 0; GetCurrentPoseIndex() != target; i++)
+        byte max = 0;
+        byte current;
+        for (var i = 0; (current = GetCurrentPoseIndex()) != target; i++)
         {
             if (i > MAX_TRIES)
             {
-                ChatGui.PrintError($"Failed to change pose index to {target}");
+                ChatGui.PrintError($"Failed to change pose index to {target} (max: {max})");
                 break;
+            } 
+            else if (current > max)
+            {
+                max = current;
             }
             ChatSender.SendMessage(CPOSE_COMMAND);
         }

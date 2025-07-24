@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin.Services;
 using Dalamud.Utility;
 using System.Linq;
@@ -21,7 +22,7 @@ public abstract class BaseResolveCmd(IClientState clientState, ICommandManager c
             "<t>" or "target" => ClientState.LocalPlayer?.TargetObject,
             "<f>" or "focus" => TargetManager.FocusTarget,
             "<mo>" or "mouseover" => TargetManager.MouseOverTarget,
-            _ => ObjectTable.FirstOrDefault(o => o.Name.TextValue == name)!,
+            _ => ObjectTable.FirstOrDefault(o => o.Name.Payloads.OfType<PlayerPayload>().First().PlayerName == name)!,
         };
 
         return gameObject is IPlayerCharacter playerCharacter ? playerCharacter : null;
