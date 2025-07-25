@@ -1,12 +1,14 @@
 using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Plugin.Services;
 using Dalamud.Utility;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using System.Linq;
 
 namespace DeterministicPose.Cmds;
 
-public abstract class BaseResolveCmd(IClientState clientState, ICommandManager commandManager, string command, string commandHelpMessage, IObjectTable objectTable, ITargetManager targetManager) : BaseCmd(command, commandHelpMessage, commandManager)
+public abstract unsafe class BaseResolveCmd(IClientState clientState, ICommandManager commandManager, string command, string commandHelpMessage, IObjectTable objectTable, ITargetManager targetManager) : BaseCmd(command, commandHelpMessage, commandManager)
 {
     protected IClientState ClientState { get; init; } = clientState;
     protected IObjectTable ObjectTable { get; init; } = objectTable;
@@ -21,7 +23,7 @@ public abstract class BaseResolveCmd(IClientState clientState, ICommandManager c
             "<t>" or "target" => ClientState.LocalPlayer?.TargetObject,
             "<f>" or "focus" => TargetManager.FocusTarget,
             "<mo>" or "mouseover" => TargetManager.MouseOverTarget,
-            _ => ObjectTable.FirstOrDefault(o => o.Name.TextValue == name)!,
+            _ => ObjectTable.FirstOrDefault(o => o.ObjectKind == ObjectKind.Player && ((Character*)o.Address)->NameString == name)!,
         };
 
         return gameObject is IPlayerCharacter playerCharacter ? playerCharacter : null;
