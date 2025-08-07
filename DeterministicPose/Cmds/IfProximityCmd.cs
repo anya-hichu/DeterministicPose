@@ -59,6 +59,7 @@ public unsafe class IfProximityCmd(ICommandManager commandManager, IClientState 
         }
 
         var proximityRange = parsedArgs.Length == 2 && float.TryParse(parsedArgs[1], CultureInfo.InvariantCulture, out var range) ? range : 1;
+
         var distance = Vector3.Distance(localCharacter->DrawObject->Position, character->DrawObject->Position);
         PluginLog.Debug($"Player '{player.Name}' found at distance: {distance}");
         if (distance > proximityRange)
