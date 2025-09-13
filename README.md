@@ -1,6 +1,6 @@
  # DeterministicPose
 
-Dalamud plugin that provides a deterministic pose commands.
+Dalamud plugin that provides deterministic pose commands.
 
 ## Installation
 
