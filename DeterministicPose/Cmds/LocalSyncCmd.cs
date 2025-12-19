@@ -1,4 +1,3 @@
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.Plugin.Services;
 using DeterministicPose.Utils;
 using System.Threading;
@@ -6,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DeterministicPose.Cmds;
 
-public unsafe class LocalSyncCmd(IChatGui chatGui, IClientState clientState, ICommandManager commandManager, IObjectTable objectTable, IPluginLog pluginLog, ITargetManager targetManager) : BaseAnimCmd(clientState, commandManager, COMMAND_NAME, COMMAND_HELP_MESSAGE, objectTable, targetManager)
+public unsafe class LocalSyncCmd(IChatGui chatGui, ICommandManager commandManager, IObjectTable objectTable, IPluginLog pluginLog, ITargetManager targetManager) : BaseAnimCmd(commandManager, COMMAND_NAME, COMMAND_HELP_MESSAGE, objectTable, targetManager)
 {
     private static readonly string COMMAND_NAME = "/localsync";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} <source player>( <target player>)?";

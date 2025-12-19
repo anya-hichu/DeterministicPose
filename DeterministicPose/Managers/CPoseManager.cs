@@ -4,18 +4,18 @@ using FFXIVClientStructs.FFXIV.Client.Game.Character;
 
 namespace DeterministicPose.Managers;
 
-public unsafe class CPoseManager(IChatGui chatGui, IClientState clientState, ChatSender chatSender)
+public unsafe class CPoseManager(IChatGui chatGui, ChatSender chatSender, IObjectTable objectTable)
 {
     private static readonly string CPOSE_COMMAND = "/cpose";
     private static readonly int MAX_TRIES = 8;
 
     private IChatGui ChatGui { get; init; } = chatGui;
-    private IClientState ClientState { get; init; } = clientState;
+    private IObjectTable ObjectTable { get; init; } = objectTable;
     private ChatSender ChatSender { get; init; } = chatSender;
 
     public byte GetCurrentPoseIndex()
     {
-        var player = ClientState.LocalPlayer;
+        var player = ObjectTable.LocalPlayer;
         if (player != null)
         {
             var character = (Character*)player.Address;

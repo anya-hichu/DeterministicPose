@@ -1,4 +1,3 @@
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.Plugin.Services;
 using DeterministicPose.Chat;
 using DeterministicPose.Utils;
@@ -8,7 +7,7 @@ using System.Numerics;
 
 namespace DeterministicPose.Cmds;
 
-public unsafe class IfProximityCmd(ICommandManager commandManager, IClientState clientState, IChatGui chatGui, ChatSender chatSender, IObjectTable objectTable, ITargetManager targetManager, IPluginLog pluginLog) : BaseResolveCmd(clientState, commandManager, COMMAND_NAME, COMMAND_HELP_MESSAGE, objectTable, targetManager)
+public unsafe class IfProximityCmd(ICommandManager commandManager, IChatGui chatGui, ChatSender chatSender, IObjectTable objectTable, ITargetManager targetManager, IPluginLog pluginLog) : BaseResolveCmd(commandManager, COMMAND_NAME, COMMAND_HELP_MESSAGE, objectTable, targetManager)
 {
     private static readonly string COMMAND_NAME = "/ifproximity";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} <player name>( <range>)?";
@@ -28,7 +27,7 @@ public unsafe class IfProximityCmd(ICommandManager commandManager, IClientState 
             return;
         }
 
-        var localPlayer = ClientState.LocalPlayer;
+        var localPlayer = ObjectTable.LocalPlayer;
         if (localPlayer == null)
         {
             ChatGui.PrintError("No local player");

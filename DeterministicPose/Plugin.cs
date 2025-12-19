@@ -1,5 +1,3 @@
-using Dalamud.Game;
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -15,7 +13,6 @@ public sealed class Plugin : IDalamudPlugin
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService] internal static IChatGui ChatGui { get; private set; } = null!;
-    [PluginService] internal static IClientState ClientState { get; private set; } = null!;
     [PluginService] internal static ISigScanner SigScanner { get; private set; } = null!;
     [PluginService] internal static IPluginLog PluginLog { get; private set; } = null!;
     [PluginService] internal static ICondition Condition { get; private set; } = null!;
@@ -37,17 +34,17 @@ public sealed class Plugin : IDalamudPlugin
     public Plugin()
     {
         var chatSender = new ChatSender(new(SigScanner), PluginLog);
-        var cPoseManager = new CPoseManager(ChatGui, ClientState, chatSender);
+        var cPoseManager = new CPoseManager(ChatGui, chatSender, ObjectTable);
 
         DPoseCmd = new(ChatGui, CommandManager, cPoseManager);
         StandupCmd = new(chatSender, CommandManager, TargetManager);
         IfInThatPositionCmd = new(ChatGui, chatSender, Condition, CommandManager);
         UntargetCmd = new(TargetManager, CommandManager);
-        IfProximityCmd = new(CommandManager, ClientState, ChatGui, chatSender, ObjectTable, TargetManager, PluginLog);
-        LocalSyncCmd = new(ChatGui, ClientState, CommandManager, ObjectTable, PluginLog, TargetManager);
+        IfProximityCmd = new(CommandManager, ChatGui, chatSender, ObjectTable, TargetManager, PluginLog);
+        LocalSyncCmd = new(ChatGui, CommandManager, ObjectTable, PluginLog, TargetManager);
 
         var emoteSheet = DataManager.GetExcelSheet<Emote>()!;
-        RemoteSyncCmd = new(ChatGui, chatSender, ClientState, cPoseManager, CommandManager, emoteSheet, ObjectTable, PluginLog, TargetManager);
+        RemoteSyncCmd = new(ChatGui, chatSender, cPoseManager, CommandManager, emoteSheet, ObjectTable, PluginLog, TargetManager);
         WalkCmd = new(ChatGui, CommandManager);
     }
 

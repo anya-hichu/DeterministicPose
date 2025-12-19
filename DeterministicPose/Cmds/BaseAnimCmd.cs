@@ -8,7 +8,7 @@ namespace DeterministicPose.Cmds;
 
 // Reference: https://github.com/Caraxi/SimpleHeels/blob/0a0fe3c02a0a2c5a7c96b3304952d5078cd338aa/Plugin.cs#L638
 
-public abstract unsafe class BaseAnimCmd(IClientState clientState, ICommandManager commandManager, string command, string commandHelpMessage, IObjectTable objectTable, ITargetManager targetManager) : BaseResolveCmd(clientState, commandManager, command, commandHelpMessage, objectTable, targetManager)
+public abstract unsafe class BaseAnimCmd(ICommandManager commandManager, string command, string commandHelpMessage, IObjectTable objectTable, ITargetManager targetManager) : BaseResolveCmd(commandManager, command, commandHelpMessage, objectTable, targetManager)
 {
     protected bool TryGetAnimationLocalTime(IPlayerCharacter player, out float? localTime) => TryAccessAnimationLocalTime(player, null, out localTime);
     protected bool TrySetAnimationLocalTime(IPlayerCharacter player, float newLocalTime) => TryAccessAnimationLocalTime(player, newLocalTime, out var _);

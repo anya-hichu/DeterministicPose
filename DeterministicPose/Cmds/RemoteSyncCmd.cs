@@ -1,4 +1,3 @@
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.Plugin.Services;
 using DeterministicPose.Chat;
 using DeterministicPose.Managers;
@@ -14,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DeterministicPose.Cmds;
 
-public unsafe class RemoteSyncCmd(IChatGui chatGui, ChatSender chatSender, IClientState clientState, CPoseManager cPoseManager, ICommandManager commandManager, ExcelSheet<Emote> emoteSheet, IObjectTable objectTable, IPluginLog pluginLog, ITargetManager targetManager) : BaseAnimCmd(clientState, commandManager, COMMAND_NAME, COMMAND_HELP_MESSAGE, objectTable, targetManager)
+public unsafe class RemoteSyncCmd(IChatGui chatGui, ChatSender chatSender, CPoseManager cPoseManager, ICommandManager commandManager, ExcelSheet<Emote> emoteSheet, IObjectTable objectTable, IPluginLog pluginLog, ITargetManager targetManager) : BaseAnimCmd(commandManager, COMMAND_NAME, COMMAND_HELP_MESSAGE, objectTable, targetManager)
 {
     private static readonly string COMMAND_NAME = "/remotesync";
     private static readonly string COMMAND_HELP_MESSAGE = $"Command usage: {COMMAND_NAME} (<player name>( <delay ms>)?|cancel)";
@@ -67,7 +66,7 @@ public unsafe class RemoteSyncCmd(IChatGui chatGui, ChatSender chatSender, IClie
             return;
         }
 
-        var localPlayer = ClientState.LocalPlayer;
+        var localPlayer = ObjectTable.LocalPlayer;
         if (localPlayer == null)
         {
             ChatGui.PrintError($"No local player");

@@ -8,9 +8,8 @@ using System.Linq;
 
 namespace DeterministicPose.Cmds;
 
-public abstract unsafe class BaseResolveCmd(IClientState clientState, ICommandManager commandManager, string command, string commandHelpMessage, IObjectTable objectTable, ITargetManager targetManager) : BaseCmd(command, commandHelpMessage, commandManager)
+public abstract unsafe class BaseResolveCmd(ICommandManager commandManager, string command, string commandHelpMessage, IObjectTable objectTable, ITargetManager targetManager) : BaseCmd(command, commandHelpMessage, commandManager)
 {
-    protected IClientState ClientState { get; init; } = clientState;
     protected IObjectTable ObjectTable { get; init; } = objectTable;
     protected ITargetManager TargetManager { get; init; } = targetManager;
 
@@ -19,8 +18,8 @@ public abstract unsafe class BaseResolveCmd(IClientState clientState, ICommandMa
         var gameObject = name switch
         {
             _ when name.IsNullOrWhitespace() => null,
-            "<me>" or "self" => ClientState.LocalPlayer,
-            "<t>" or "target" => ClientState.LocalPlayer?.TargetObject,
+            "<me>" or "self" => ObjectTable.LocalPlayer,
+            "<t>" or "target" => ObjectTable.LocalPlayer?.TargetObject,
             "<f>" or "focus" => TargetManager.FocusTarget,
             "<mo>" or "mouseover" => TargetManager.MouseOverTarget,
             _ => ObjectTable.FirstOrDefault(o => o.ObjectKind == ObjectKind.Player && ((Character*)o.Address)->NameString == name)!,
