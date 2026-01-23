@@ -45,7 +45,7 @@ public unsafe class IfProximityCmd(ICommandManager commandManager, IChatGui chat
         var player = FindPlayerCharacter(name);
         if (player == null)
         {
-            ChatGui.PrintError($"Sending {ABORT_COMMAND} since unable to locate: {name}");
+            ChatGui.PrintError($"Sending {ABORT_COMMAND} since unable to locate '{name}'");
             ChatSender.SendMessage(ABORT_COMMAND);
             return;
         }
@@ -53,7 +53,7 @@ public unsafe class IfProximityCmd(ICommandManager commandManager, IChatGui chat
         var character = (Character*)player.Address;
         if (character->DrawObject == null)
         {
-            ChatGui.PrintError($"No draw object for character: {name}");
+            ChatGui.PrintError($"No draw object for character '{name}'");
             return;
         }
 
